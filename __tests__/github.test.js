@@ -2,10 +2,9 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-
 jest.mock('../lib/services/github');
 
-describe.only('github auth', () => {
+describe('github auth', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -20,8 +19,7 @@ describe.only('github auth', () => {
       /https:\/\/github.com\/login\/oauth\/authorize\?client_id=[\w\d]+&scope=user&redirect_uri=http:\/\/localhost:7890\/api\/v1\/github\/callback/i
     );
   });
-
-  it.only('/api/v1/github/callback should login users and redirect to dashboard', async () => {
+  it('/api/v1/github/callback should login users and redirect to dashboard', async () => {
     const res = await request
       .agent(app)
       .get('/api/v1/github/callback?code=42')
